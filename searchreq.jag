@@ -1,0 +1,71 @@
+<%
+
+var title = request.getParameter('q');
+var title = encodeURI(title); // encode search term for rottentomatoes search 
+
+var key = "AIzaSyDGJGP3sK_-QBv0qzRTERoRAyFBQAMgkC8";
+var key= encodeURI(key);
+var cx = "005121852398508453936:7rsv262ldik"; 
+var cx=encodeURI(cx);
+
+     
+
+var searchJSON = get("https://www.googleapis.com/customsearch/v1", { key :key, cx :cx,q : title,alt:"json"},"json");
+var kind= searchJSON.data.kind;
+var searchInformation= searchJSON.data.searchInformation;
+var items= searchJSON.data.items;
+
+
+
+
+
+%>
+
+<table>
+
+<tr><td><br/>kind: <%=kind%><br/><tr>
+
+<tr>
+<td><br/>searchInformation:<br/>
+
+<div span style="padding-left:50px">
+<br/>searchTime:<%=searchInformation.searchTime%><br/>
+<br/>formattedSearchTime:<%=searchInformation.formattedSearchTime%><br/>
+<br/>totalResults:<%=searchInformation.totalResults%><br/>
+<br/>formattedTotalResults:<%=searchInformation.formattedTotalResults%><br/>
+</div>
+
+</td>
+
+</tr>
+
+
+<tr>
+<td><br>Items:</br>
+
+<% 
+	for (var i=0; i < items.length; i++){
+		var item = items[i]; 
+	%>
+
+<div span style="padding-left:50px">
+<br>kind:<%=item.kind%></br>
+<br>title:<%=item.title%></br>
+<br>displayLink:<%=item.displayLink%></br>
+</div>
+<br>
+<%}%>
+
+
+</td>
+
+</tr>
+
+
+
+
+</table>
+
+
+
+
